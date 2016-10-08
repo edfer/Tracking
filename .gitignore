@@ -2,12 +2,10 @@
 env/
 
 # Database files
-db.squlite3
+db.sqlite3
 
 #PyCharm
 .idea/
 
 #Python bytecode files
 *.pyc
-
-git stat
