@@ -3,4 +3,6 @@ from django.shortcuts import render
 
 # Create your views here.
 def hello(request):
-    return HttpResponse('Hello, World!')
+    nombre = request.GET.get('nombre')
+    apellido = request.GET.get('apellido')
+    return HttpResponse('Hello {0}, {1}'.format(nombre, apellido))
