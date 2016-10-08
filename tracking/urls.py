@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from photos.views import home
+from photos.views import home, photo_detail
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^photos/(?P<pk>[0-9]+)$', photo_detail),
     url(r'^$', home)
 ]
