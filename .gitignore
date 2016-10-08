@@ -9,3 +9,9 @@ db.sqlite3
 
 #Python bytecode files
 *.pyc
+
+
+
+#photos/__pycache__/
+#photos/migrations/__pycache__/
+#tracking/__pycache__/
