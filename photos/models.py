@@ -19,7 +19,7 @@ VISIBILITY_PRIVATE = 'PRI'
 
 VISIBILITY =(
     (VISIBILITY_PUBLIC, 'Pública'),
-    (VISIBILITY_PRIVATE, 'Privadapython manage.py')
+    (VISIBILITY_PRIVATE, 'Privada')
 )
 
 class Photo(models.Model):
