@@ -47,15 +47,16 @@ def photo_creation(request):
 
 
     message = None
-    if request.method == "POST" and photo_form.is_valid():
-        photo_with_user = Photo(owner=request.uesr)
+    if request.method == "POST":
+        photo_with_user = Photo(owner=request.user)
         photo_form = PhotoForm(request.POST, instance=photo_with_user)
-        new_photo = photo_form.save()
-        photo_form = PhotoForm()
-        message = "Foto creada con éxito. <a href='/photos/{0}> Ver foto</a>".format(new_photo.pk)
+        if photo_form.is_valid():
+            new_photo = photo_form.save()
+            photo_form = PhotoForm()
+            message = "Foto creada con éxito. <a href='/photos/{0}'> Ver foto</a>".format(new_photo.pk)
     else:
         photo_form = PhotoForm()
 
-    context = {'form':photo_form, 'message': message}
+    context = {'form': photo_form, 'message': message}
     return render(request, 'photos/photo_creation.html', context)
 
