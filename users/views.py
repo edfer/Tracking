@@ -10,6 +10,7 @@ def login(request):
     """
 
     error_message = ""
+    login_form = LoginForm()
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('pwd')
@@ -23,7 +24,8 @@ def login(request):
             else:
                 error_message = "Cuenta de usuario inactiva"
 
-    return render(request, 'users/login.html', {'error': error_message})
+    context = {'error': error_message, 'form': login_form}
+    return render(request, 'users/login.html', context)
 
 def logout(request):
     """
