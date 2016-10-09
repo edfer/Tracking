@@ -22,7 +22,7 @@ def photo_detail(request, pk):
     :param request: objeto HttpRequest con los datos de la petición.
     :return: objeto HttpResponse con los datos de la respuesta
     """
-    possible_photos = Photo.objects.filter(pk=pk)
+    possible_photos = Photo.objects.filter(pk=pk).select_related("owner")
     if len(possible_photos) == 0:
         return HttpResponseNotFound("La imagen no existe")
     elif len(possible_photos) > 1:

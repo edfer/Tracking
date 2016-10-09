@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Bienvenido a Share Pics - Como Frikr, pero con otro nombre.</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block body %}
     <h1>Share your pics</h1>
     <p>Es Frikr, pero con otro nombre.</p>
 
     {% if photos_list|length > 0 %}
         <h2>Últimas Pics publicadas</h2>
         {% for photo in photos_list %}
-            <img src="{{ photo.url }}" alt="{{ photo.name }}" title="{{ photo.name }}" height="200">
+            <a href="/photos/{{ photo.pk }}">
+                <img src="{{ photo.url }}" alt="{{ photo.name }}" title="{{ photo.name }}" height="200">
+            </a>
         {% endfor %}
     {% else %}
         <p>¡Comparte la primera foto!</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}
