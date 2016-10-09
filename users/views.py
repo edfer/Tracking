@@ -1,18 +1,34 @@
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.shortcuts import render, redirect
+from django.views import View
+
 from users.forms import LoginForm
 
 
-def login(request):
-    """
+class LoginView(View):
 
-    :param request:
-    :return:
-    """
+    def get(self, request):
+        """
 
-    error_message = ""
-    login_form = LoginForm(request.POST) if request.method == "POST" else LoginForm()
-    if request.method == "POST":
+        :param request:
+        :return:
+        """
+
+        error_message = ""
+        login_form =  LoginForm()
+        context = {'error': error_message, 'form': login_form}
+        return render(request, 'users/login.html', context)
+
+    def post(self, request):
+        """
+
+        :param request:
+        :return:
+        """
+
+        error_message = ""
+        login_form = LoginForm(request.POST)
+
         if login_form.is_valid():
             username = login_form.cleaned_data.get('username')
             password = login_form.cleaned_data.get('pwd')
@@ -26,15 +42,17 @@ def login(request):
                 else:
                     error_message = "Cuenta de usuario inactiva"
 
-    context = {'error': error_message, 'form': login_form}
-    return render(request, 'users/login.html', context)
+        context = {'error': error_message, 'form': login_form}
+        return render(request, 'users/login.html', context)
 
-def logout(request):
-    """
+class LogoutView(View):
 
-    :param request:
-    :return:
-    """
-    if request.user.is_authenticated():
-        django_logout(request)
-    return redirect('/')
+    def get(self, request):
+        """
+
+        :param request:
+        :return:
+        """
+        if request.user.is_authenticated():
+            django_logout(request)
+        return redirect('/')
