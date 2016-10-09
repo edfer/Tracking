@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 from photos.forms import PhotoForm
 from photos.models import Photo, VISIBILITY_PUBLIC
+
 
 
 def home(request):
@@ -35,6 +36,7 @@ def photo_detail(request, pk):
 
     return render(request, 'photos/photo_detail.html', context)
 
+@login_required()
 def photo_creation(request):
     """
     Presenta el formulario para crear una foto, y en caso de que la petición sea POST
@@ -42,12 +44,17 @@ def photo_creation(request):
     :param request:
     :return:
     """
+
+
     message = None
-    photo_form = PhotoForm(request.POST) if request.method == "POST" else PhotoForm()
     if request.method == "POST" and photo_form.is_valid():
+        photo_with_user = Photo(owner=request.uesr)
+        photo_form = PhotoForm(request.POST, instance=photo_with_user)
         new_photo = photo_form.save()
         photo_form = PhotoForm()
         message = "Foto creada con éxito. <a href='/photos/{0}> Ver foto</a>".format(new_photo.pk)
+    else:
+        photo_form = PhotoForm()
 
     context = {'form':photo_form, 'message': message}
     return render(request, 'photos/photo_creation.html', context)
